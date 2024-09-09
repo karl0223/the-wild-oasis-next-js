@@ -2,6 +2,10 @@ import CabinLists from '@/app/_components/CabinLists';
 import { Suspense } from 'react';
 import Spinner from '@/app/_components/Spinner';
 
+// revalidate cache / fetch new data ---- data cache / full route approach
+export const revalidate = 3600; // seconds
+// export const revalidate = 15; // seconds
+
 export const metadata = {
     title: 'Cabins',
 };
