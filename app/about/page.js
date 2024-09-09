@@ -1,12 +1,18 @@
 import Image from 'next/image';
 import image1 from '@/public/about-1.jpg';
 import image2 from '@/public/about-2.jpg';
+import Link from 'next/link';
+import { getCabins } from '@/app/_lib/data-service';
+
+export const revalidate = 86400;
 
 export const metadata = {
     title: 'About',
 };
 
-export default function Page() {
+export default async function Page() {
+    const cabins = await getCabins();
+
     return (
         <div className='grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center'>
             <div className='col-span-3'>
@@ -24,11 +30,11 @@ export default function Page() {
                         enjoying simple pleasures with family.
                     </p>
                     <p>
-                        Our 8 luxury cabins provide a cozy base, but the real
-                        freedom and peace you&apos;ll find in the surrounding
-                        mountains. Wander through lush forests, breathe in the
-                        fresh air, and watch the stars twinkle above from the
-                        warmth of a campfire or your hot tub.
+                        Our {cabins.length} luxury cabins provide a cozy base,
+                        but the real freedom and peace you&apos;ll find in the
+                        surrounding mountains. Wander through lush forests,
+                        breathe in the fresh air, and watch the stars twinkle
+                        above from the warmth of a campfire or your hot tub.
                     </p>
                     <p>
                         This is where memorable moments are made, surrounded by
@@ -85,12 +91,12 @@ export default function Page() {
                     </p>
 
                     <div>
-                        <a
+                        <Link
                             href='/cabins'
                             className='inline-block mt-4 bg-accent-500 px-8 py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all'
                         >
                             Explore our luxury cabins
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
