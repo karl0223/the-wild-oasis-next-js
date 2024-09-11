@@ -2,6 +2,7 @@ import CabinLists from '@/app/_components/CabinLists';
 import { Suspense } from 'react';
 import Spinner from '@/app/_components/Spinner';
 import Filter from '@/app/_components/Filter';
+import ReservationReminder from '../_components/ReservationReminder';
 
 // revalidate cache / fetch new data ---- data cache / full route approach
 export const revalidate = 3600; // seconds
@@ -33,6 +34,7 @@ export default function Page({ searchParams }) {
 
             <Suspense fallback={<Spinner />} key={filter}>
                 <CabinLists filter={filter} />
+                <ReservationReminder />
             </Suspense>
         </div>
     );
