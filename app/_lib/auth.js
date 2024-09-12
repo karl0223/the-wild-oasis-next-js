@@ -10,7 +10,7 @@ const authConfig = {
         }),
     ],
     callbacks: {
-        authorized({ auth }, request) {
+        async authorized({ auth }, request) {
             return !!auth?.user; // convert to boolean
         },
         async signIn({ user, account, profile }) {
@@ -28,10 +28,31 @@ const authConfig = {
                 return false;
             }
         },
-        async session({ session, user }) {
-            const guest = await getGuest(session.user.email);
-            session.user.guestId = user.id;
-            return session;
+        async session({ session, token, user }) {
+            try {
+                // Get guest information by email (from session)
+                const guest = await getGuest(session.user.email);
+
+                // Attach guest ID from database to the session object
+                if (guest) {
+                    session.user.guestId = guest.id;
+                } else {
+                    // If guest is not found, log an error or handle it
+                    console.warn(
+                        'Guest not found for session:',
+                        session.user.email
+                    );
+                }
+
+                // Return the modified session
+                return session;
+            } catch (error) {
+                // Log session errors
+                console.error('Error in session callback:', error);
+
+                // Return session as is even in case of error
+                return session;
+            }
         },
     },
     pages: {
