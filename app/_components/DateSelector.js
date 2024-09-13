@@ -36,23 +36,17 @@ function DateSelector({ settings, bookedDates, cabin }) {
             <DayPicker
                 className='pt-12 place-self-center'
                 mode='range'
-                selected={displayRange}
-                onSelect={setRange}
-                min={minBookingLength + 1}
-                max={maxBookingLength}
-                defaultMonth={new Date()} // Starting from the current month
-                captionLayout='dropdown'
-                numberOfMonths={2} // Show 2 months
-                // disabled={[
-                //     {
-                //         from: new Date(2024, 6, 1), // Disable bookings outside the allowed range
-                //         to: new Date(), // Disable dates before today
-                //     },
-                // ]}
+                selected={displayRange} // Selected date range
+                onSelect={setRange} // Function to handle date selection
+                defaultMonth={new Date()} // Display the current month by default
+                captionLayout='dropdown' // Dropdown for month and year selection
+                numberOfMonths={2} // Display two months side by side
+                min={minBookingLength + 1} // Minimum selectable range
+                max={maxBookingLength} // Maximum selectable range
                 disabled={(curDate) =>
                     isPast(curDate) ||
                     bookedDates.some((date) => isSameDay(date, curDate))
-                }
+                } // Disable past dates and booked dates
             />
 
             <div className='flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]'>
